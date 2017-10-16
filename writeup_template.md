@@ -1,10 +1,9 @@
-#**Traffic Sign Recognition** 
+# Traffic Sign Recognition
 
 ##Writeup Template
 
 ###You can use this file as a template for your writeup if you want to submit it as a markdown file, but feel free to use some other method and submit a pdf if you prefer.
 
----
 
 **Build a Traffic Sign Recognition Project**
 
@@ -23,33 +22,72 @@ The goals / steps of this project are the following:
 [image2]: ./examples/grayscale.jpg "Grayscaling"
 [image3]: ./examples/random_noise.jpg "Random Noise"
 [image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/placeholder.png "Traffic Sign 2"
-[image6]: ./examples/placeholder.png "Traffic Sign 3"
-[image7]: ./examples/placeholder.png "Traffic Sign 4"
-[image8]: ./examples/placeholder.png "Traffic Sign 5"
+[image5]: ./examples/dataset_distribution_chart.png
+dataset_chart.png
+### Data Set Summary & Exploration
 
-## Rubric Points
-###Here I will consider the [rubric points](https://review.udacity.com/#!/rubrics/481/view) individually and describe how I addressed each point in my implementation.  
+* Stats of the dataset
 
----
-###Writeup / README
+Image data shape:         32x32 RGB pixel
+Number of classes:        43
 
-####1. Provide a Writeup / README that includes all the rubric points and how you addressed each one. You can submit your writeup as markdown or pdf. You can use this template as a guide for writing the report. The submission includes the project code.
+|   Dataset           |   # Samples  |   Percentage of whole dataset |
+|--------------------:|-------------:|-------------------------------:|
+|     Training dataset |  34799  | 67.13% |
+|   Validation dataset |  4410  | 8.51% |
+|         Test dataset |  12630  | 24.36% |
+|              **Total** |  51839                                ||
 
-You're reading it! and here is a link to my [project code](https://github.com/udacity/CarND-Traffic-Sign-Classifier-Project/blob/master/Traffic_Sign_Classifier.ipynb)
+[Dataset sample distribution][image5]
 
-###Data Set Summary & Exploration
 
-####1. Provide a basic summary of the data set. In the code, the analysis should be done using python, numpy and/or pandas methods rather than hardcoding results manually.
+* Number of unique classes/labels in the training, validation and test data sets
 
-I used the pandas library to calculate summary statistics of the traffic
-signs data set:
-
-* The size of training set is ?
-* The size of the validation set is ?
-* The size of test set is ?
-* The shape of a traffic sign image is ?
-* The number of unique classes/labels in the data set is ?
+|    | Traffic sign description                           |   Training |   Validation |   Test |
+|---:|:---------------------------------------------------|-----------:|-------------:|-------:|
+|  0 | Speed limit (20km/h)                               |        180 |           30 |     60 |
+|  1 | Speed limit (30km/h)                               |       1980 |          240 |    720 |
+|  2 | Speed limit (50km/h)                               |       2010 |          240 |    750 |
+|  3 | Speed limit (60km/h)                               |       1260 |          150 |    450 |
+|  4 | Speed limit (70km/h)                               |       1770 |          210 |    660 |
+|  5 | Speed limit (80km/h)                               |       1650 |          210 |    630 |
+|  6 | End of speed limit (80km/h)                        |        360 |           60 |    150 |
+|  7 | Speed limit (100km/h)                              |       1290 |          150 |    450 |
+|  8 | Speed limit (120km/h)                              |       1260 |          150 |    450 |
+|  9 | No passing                                         |       1320 |          150 |    480 |
+| 10 | No passing for vehicles over 3.5 metric tons       |       1800 |          210 |    660 |
+| 11 | Right-of-way at the next intersection              |       1170 |          150 |    420 |
+| 12 | Priority road                                      |       1890 |          210 |    690 |
+| 13 | Yield                                              |       1920 |          240 |    720 |
+| 14 | Stop                                               |        690 |           90 |    270 |
+| 15 | No vehicles                                        |        540 |           90 |    210 |
+| 16 | Vehicles over 3.5 metric tons prohibited           |        360 |           60 |    150 |
+| 17 | No entry                                           |        990 |          120 |    360 |
+| 18 | General caution                                    |       1080 |          120 |    390 |
+| 19 | Dangerous curve to the left                        |        180 |           30 |     60 |
+| 20 | Dangerous curve to the right                       |        300 |           60 |     90 |
+| 21 | Double curve                                       |        270 |           60 |     90 |
+| 22 | Bumpy road                                         |        330 |           60 |    120 |
+| 23 | Slippery road                                      |        450 |           60 |    150 |
+| 24 | Road narrows on the right                          |        240 |           30 |     90 |
+| 25 | Road work                                          |       1350 |          150 |    480 |
+| 26 | Traffic signals                                    |        540 |           60 |    180 |
+| 27 | Pedestrians                                        |        210 |           30 |     60 |
+| 28 | Children crossing                                  |        480 |           60 |    150 |
+| 29 | Bicycles crossing                                  |        240 |           30 |     90 |
+| 30 | Beware of ice/snow                                 |        390 |           60 |    150 |
+| 31 | Wild animals crossing                              |        690 |           90 |    270 |
+| 32 | End of all speed and passing limits                |        210 |           30 |     60 |
+| 33 | Turn right ahead                                   |        599 |           90 |    210 |
+| 34 | Turn left ahead                                    |        360 |           60 |    120 |
+| 35 | Ahead only                                         |       1080 |          120 |    390 |
+| 36 | Go straight or right                               |        330 |           60 |    120 |
+| 37 | Go straight or left                                |        180 |           30 |     60 |
+| 38 | Keep right                                         |       1860 |          210 |    690 |
+| 39 | Keep left                                          |        270 |           30 |     90 |
+| 40 | Roundabout mandatory                               |        300 |           60 |     90 |
+| 41 | End of no passing                                  |        210 |           30 |     60 |
+| 42 | End of no passing by vehicles over 3.5 metric tons |        210 |           30 |     90 |
 
 ####2. Include an exploratory visualization of the dataset.
 
@@ -84,20 +122,25 @@ The difference between the original data set and the augmented data set is the f
 
 My final model consisted of the following layers:
 
-| Layer         		|     Description	        					| 
+
+
+| Layer         		      |     Description	        					                 | 
 |:---------------------:|:---------------------------------------------:| 
-| Input         		| 32x32x3 RGB image   							| 
-| Convolution 3x3     	| 1x1 stride, same padding, outputs 32x32x64 	|
-| RELU					|												|
-| Max pooling	      	| 2x2 stride,  outputs 16x16x64 				|
-| Convolution 3x3	    | etc.      									|
-| Fully connected		| etc.        									|
-| Softmax				| etc.        									|
-|						|												|
-|						|												|
- 
-
-
+| Input         		      | 32x32x3 RGB image                             |
+| Convolution           | kernel: 5x5, stride: 1x1, output: 32x32x64    |
+| Max pooling           | kernel: 2x2, stride: 2x2, output: 16x16x64    |
+| Convolution           | kernel: 5x5, stride: 1x1, output: 16x16x64    |
+| Max pooling           | kernel: 2x2, stride: 2x2, output: 8x8x256     |
+| Convolution           | kernel: 5x5, stride: 1x1, output: 8x8x256     |
+| Max pooling           | kernel: 2x2, stride: 2x2, output: 4x4x256     |
+| Fully connected       | input: 4096, output: 400                      |
+| RELU                  |                                               |
+| Dropout               | keep_prob: 0.6                                |
+| Fully connected       | input: 400, output: 200                       |
+| RELU                  |                                               |
+| Dropout               | keep_prob: 0.6                                |
+| Fully connected out   | input: 200, output: 43                        |    
+    
 ####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
 
 To train the model, I used an ....
