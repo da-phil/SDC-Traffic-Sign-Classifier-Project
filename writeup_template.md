@@ -22,7 +22,7 @@ The goals / steps of this project are the following:
 [image2]: ./examples/grayscale.jpg "Grayscaling"
 [image3]: ./examples/random_noise.jpg "Random Noise"
 [image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/dataset_distribution_chart.png| "Dataset sample distribution"
+[image5]: ./examples/dataset_distribution_chart.png "Dataset sample distribution"
 
 ### Data Set Summary & Exploration
 
