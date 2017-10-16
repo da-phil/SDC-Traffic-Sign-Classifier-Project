@@ -22,8 +22,8 @@ The goals / steps of this project are the following:
 [image2]: ./examples/grayscale.jpg "Grayscaling"
 [image3]: ./examples/random_noise.jpg "Random Noise"
 [image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/dataset_distribution_chart.png
-dataset_chart.png
+[image5]: ./examples/dataset_distribution_chart.png "Dataset sample distribution"
+
 ### Data Set Summary & Exploration
 
 * Stats of the dataset
@@ -38,7 +38,7 @@ Number of classes:        43
 |         Test dataset |  12630  | 24.36% |
 |              **Total** |  51839                                ||
 
-[Dataset sample distribution][image5]
+![Dataset sample distribution][image5]
 
 
 * Number of unique classes/labels in the training, validation and test data sets
