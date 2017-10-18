@@ -84,6 +84,8 @@ The goals / steps of this project are the following:
 | 41 | End of no passing                                  |        210 |           30 |     60 |
 | 42 | End of no passing by vehicles over 3.5 metric tons |        210 |           30 |     90 |
 
+This table exposes a drastic inbalance between the sample-sizes across all classes. I'd expect that training on this dataset might lead to biased classification and weak recognition of classes with less examples.
+
 #### Exploratory visualization of the dataset
 
 IMAGE
