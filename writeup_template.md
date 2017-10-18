@@ -23,9 +23,8 @@ The goals / steps of this project are the following:
 
 **Stats of the dataset**
 
-Image data shape:         32x32 RGB pixel
-
-Number of classes:        43
+* Image data shape:  32x32 RGB pixel
+* Number of classes: 43
 
 |   Dataset           |   # Samples  |   Percentage of whole dataset |
 |--------------------:|-------------:|-------------------------------:|
@@ -87,8 +86,23 @@ Number of classes:        43
 
 #### Exploratory visualization of the dataset
 
-**Original dataset example**
+IMAGE
 
+
+
+### Design and Test a Model Architecture
+
+#### Preprocessing pipeline
+
+**Colorspaces considerations**
+As the traffic signs are available as RGB images it makes sense to stick to RGB colorspace and use it for training.
+Unlike other colorspaces RGB should give the trained network the same intuition as the human when it comes to color perception,
+e.g. it make take advantage of the color-coding of particular signs as additional cues for the classification, besids the structure and patterns.
+
+On the other hand using colorspaces which seperate the luminance (or brightness) from the chrominance (or colors) allow for tweaking the image contrast while not changing the colors. Therefore the YUV and LAB colorspaces were considered, where the luminance channel was used for adaptive histogram equalization using `cv2.createCLAHE` function, the color channels were left as is. My assumption was that the network would benefit from a better image contrast, extracting patterns and structure more easily.
+
+**Image equalization and normalization**
+Images 
 
 **Augmented dataset example**
 
@@ -98,39 +112,23 @@ The following augmentations were applied:
 * Image shifts in x and y axis: [0, 0.1] %
 * Zoom: [0, 0.1] %
 
-
-###Design and Test a Model Architecture
-
-####1. Describe how you preprocessed the image data. What techniques were chosen and why did you choose these techniques? Consider including images showing the output of each preprocessing technique. Pre-processing refers to techniques such as converting to grayscale, normalization, etc. (OPTIONAL: As described in the "Stand Out Suggestions" part of the rubric, if you generated additional data for training, describe why you decided to generate additional data, how you generated the data, and provide example images of the additional data. Then describe the characteristics of the augmented training set like number of images in the set, number of images for each class, etc.)
-
-As a first step, I decided to convert the images to grayscale because ...
-
-Here is an example of a traffic sign image before and after grayscaling.
-
-![alt text][image2]
-
-As a last step, I normalized the image data because ...
-
-I decided to generate additional data because ... 
-
-To add more data to the the data set, I used the following techniques because ... 
-
-Here is an example of an original image and an augmented image:
-
-![alt text][image3]
-
-The difference between the original data set and the augmented data set is the following ... 
+IMAGE orig -> IMAGE in new colorspace -> IMAGE augmented
 
 
-####2. Describe what your final model architecture looks like including model type, layers, layer sizes, connectivity, etc.) Consider including a diagram and/or table describing the final model.
+
+#### Model selection
+
+The first choice of course was the recommended LeCun5 network from the course material.
+It delivered a validation accuracy of around 90% while using unmodified training data but didn't really generalize well on new images.
+Besides it was impossible to get a validation accuracy higher than approx. 80% on the augmented dataset.
+
+In order to enable the network to learn more features and generalize better I added one more convolution + max pooling layer and increased the depth of the convolution layers.
 
 My final model consisted of the following layers:
 
-
-
-| Layer         		      |     Description	        					                 | 
+| Layer         		      |     Description                         | 
 |:---------------------:|:---------------------------------------------:| 
-| Input         		      | 32x32x3 RGB image                             |
+| Input         		      | 32x32x3 RGB image                       |
 | Convolution           | kernel: 5x5, stride: 1x1, output: 32x32x64    |
 | Max pooling           | kernel: 2x2, stride: 2x2, output: 16x16x64    |
 | Convolution           | kernel: 5x5, stride: 1x1, output: 16x16x64    |
@@ -145,9 +143,13 @@ My final model consisted of the following layers:
 | Dropout               | keep_prob: 0.6                                |
 | Fully connected out   | input: 200, output: 43                        |    
     
-####3. Describe how you trained your model. The discussion can include the type of optimizer, the batch size, number of epochs and any hyperparameters such as learning rate.
+#### Training
 
-To train the model, I used an ....
+optimizer:
+the batch size: 
+number of epochs:
+learning rate:
+
 
 ####4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
