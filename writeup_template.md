@@ -21,9 +21,10 @@ The goals / steps of this project are the following:
 
 ### Data Set Summary & Exploration
 
-* Stats of the dataset
+**Stats of the dataset**
 
 Image data shape:         32x32 RGB pixel
+
 Number of classes:        43
 
 |   Dataset           |   # Samples  |   Percentage of whole dataset |
@@ -36,7 +37,7 @@ Number of classes:        43
 ![Dataset sample distribution][image5]
 
 
-* Number of unique classes/labels in the training, validation and test data sets
+**Number of unique classes/labels in the training, validation and test data sets**
 
 |    | Traffic sign description                           |   Training |   Validation |   Test |
 |---:|:---------------------------------------------------|-----------:|-------------:|-------:|
@@ -84,11 +85,19 @@ Number of classes:        43
 | 41 | End of no passing                                  |        210 |           30 |     60 |
 | 42 | End of no passing by vehicles over 3.5 metric tons |        210 |           30 |     90 |
 
-####2. Include an exploratory visualization of the dataset.
+#### Exploratory visualization of the dataset
 
-Here is an exploratory visualization of the data set. It is a bar chart showing how the data ...
+**Original dataset example**
 
-![alt text][image1]
+
+**Augmented dataset example**
+
+The original dataset was augmented using `ImageDataGenerator` from `keras.preprocessing.image` in order to make the trained classifier more robost against deviations from the training dataset.
+The following augmentations were applied:
+* Rotations: [0, 30]°
+* Image shifts in x and y axis: [0, 0.1] %
+* Zoom: [0, 0.1] %
+
 
 ###Design and Test a Model Architecture
 
