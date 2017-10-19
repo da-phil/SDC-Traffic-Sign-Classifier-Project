@@ -13,7 +13,7 @@ The goals / steps of this project are the following:
 
 [//]: # (Image References)
 
-[image1]: ./examples/visualization.jpg "Visualization"
+[dataset-example]: ./examples/dataset_example.png "Visualization of dataset"
 [image2]: ./examples/grayscale.jpg "Grayscaling"
 [image3]: ./examples/random_noise.jpg "Random Noise"
 [image4]: ./examples/placeholder.png "Traffic Sign 1"
@@ -88,8 +88,7 @@ This table exposes a drastic inbalance between the sample-sizes across all class
 
 #### Exploratory visualization of the dataset
 
-IMAGE
-
+[dataset-example]
 
 
 ### Design and Test a Model Architecture
@@ -110,7 +109,7 @@ Images
 
 The original dataset was augmented using `ImageDataGenerator` from `keras.preprocessing.image` in order to make the trained classifier more robost against deviations from the training dataset.
 The following augmentations were applied:
-* Rotations: [0, 30]°
+* Rotations: [0, 20]°
 * Image shifts in x and y axis: [0, 0.1] %
 * Zoom: [0, 0.1] %
 
