@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import pickle
 import numpy as np
 import csv
@@ -33,7 +35,7 @@ def normalize_for_imshow(image):
             return (image - image.mean()) / image.std() 
         
 
-def visualize_dataset(data, indexes, imgs_per_class=10, classes=43):
+def visualize_dataset(data, indexes, imgs_per_class=10, classes=43, shuffle=False):
     #norm = colors.LogNorm(X_mean + 0.5 * X_std, 1.0, clip='True')
     #norm = colors.LogNorm(vmin=-1.0, vmax=1.0)
     #norm = colors.LogNorm(image.mean() + 0.5 * image.std(), image.max(), clip='True')
@@ -52,16 +54,22 @@ def visualize_dataset(data, indexes, imgs_per_class=10, classes=43):
         for i, img in enumerate(data):
             data_conv[i] = np.reshape(cv2.cvtColor(img, cv2.COLOR_Lab2RGB), data.shape[1:])
 
-    fig, axarray = plt.subplots(classes, imgs_per_class, sharex=True, sharey=True, figsize=(8,4))
-    for sign_class in range(classes):
+    fig, axarray = plt.subplots(classes, imgs_per_class, sharex=True, sharey=True)
+    if shuffle:
+    	class_list = random.sample(range(n_classes), classes)
+    else:
+        class_list = range(classes)
+
+    for i, sign_class in enumerate(class_list):
         print("Showing example images from class %d: %s" % (sign_class, labels[sign_class]))
-        axarray[sign_class, 0].set_title(labels[sign_class], fontdict={'fontsize': 14})
+        axarray[i, 0].set_title(labels[sign_class] + " (class %d)" % sign_class, fontdict={'fontsize': 14})
         rand_items = random.sample(list(indexes[sign_class][0]), imgs_per_class)
         for count, item in enumerate(rand_items):
             image = data_conv[item].squeeze()
-            axarray[sign_class, count].set_axis_off()
-            axarray[sign_class, count].imshow(normalize_for_imshow(image), cmap=imshow_cmap)
+            axarray[i, count].set_axis_off()
+            axarray[i, count].imshow(normalize_for_imshow(image), cmap=imshow_cmap)
 
+    plt.tight_layout(pad=0.1, h_pad=0.1, w_pad=0.001)
     return fig
 
 
@@ -140,7 +148,7 @@ if __name__ == '__main__':
     plt.close()
 
 
-    fig2 = visualize_dataset(X_train, class_indexes_train, imgs_per_class=10, classes=3)
+    fig2 = visualize_dataset(X_train, class_indexes_train, imgs_per_class=5, classes=5, shuffle=True)
     fig2.savefig('./examples/dataset_example.png', bbox_inches='tight')
     plt.show()  
     plt.close()
