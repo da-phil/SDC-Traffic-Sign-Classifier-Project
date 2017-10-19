@@ -88,7 +88,7 @@ This table exposes a drastic inbalance between the sample-sizes across all class
 
 #### Exploratory visualization of the dataset
 
-[dataset-example]
+![Dataset visualization][dataset-example]
 
 
 ### Design and Test a Model Architecture
