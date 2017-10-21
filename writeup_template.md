@@ -98,6 +98,12 @@ The goals / steps of this project are the following:
 This table exposes a drastic inbalance between the sample-sizes across all classes. I'd expect that training on this dataset might lead to biased classification and weak recognition of classes with less examples.
 For example the "Speed limit (20km/h)" as well as the "Go straight or left" sign is underrepresented in all three datasets.
 
+In order to overcome a biased prediction I balanced the training dateset by equalizing the number of training examples per class.
+As a reference count I used the count of the class which has the most samples (class 2, samples = 2010), because I didn't want to discard any samples from this class.
+Having 2010 samples from all 43 classes leads to a training set of 86430 samples. In the random image autmentation later I make sure that all the samples which appear several times in the training set look different due to the augmentations.
+
+The following article discusses another solution to an inbalanced training dataset, it penalizes the reward for the majority class, that means re-weighting the loss function:
+https://blog.fineighbor.com/tensorflow-dealing-with-imbalanced-data-eb0108b10701?gi=c324270bdfd5
 
 #### Exploratory visualization of the dataset
 
@@ -185,10 +191,9 @@ If a well known architecture was chosen:
 * How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
  
 
-###Test a Model on New Images
+### Test a Model on New Images
 
-####1. Choose five German traffic signs found on the web and provide them in the report. For each image, discuss what quality or qualities might be difficult to classify.
-
+#### Picking random German traffic signs from the web
 Here are five German traffic signs that I found on the web:
 
 ![sign1] ![sign2] ![sign3] ![sign4] ![sign5] ![sign6] ![sign7] ![sign8]
@@ -211,9 +216,8 @@ Here are the results of the prediction:
 
 The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
 
-####3. Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
+#### Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
 
-The code for making predictions on my final model is located in the 11th cell of the Ipython notebook.
 
 For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
 
@@ -228,7 +232,6 @@ For the first image, the model is relatively sure that this is a stop sign (prob
 
 For the second image ... 
 
-### (Optional) Visualizing the Neural Network (See Step 4 of the Ipython notebook for more details)
-####1. Discuss the visual output of your trained network's feature maps. What characteristics did the neural network use to make classifications?
+### Visualization of the networks featuremaps
 
 
