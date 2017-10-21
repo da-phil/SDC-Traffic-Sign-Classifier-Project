@@ -35,14 +35,14 @@ The goals / steps of this project are the following:
 * Image data shape:  32x32 RGB pixel
 * Number of classes: 43
 
+![dataset-distribution]
+
 |   Dataset           |   # Samples  |   Percentage of whole dataset |
 |--------------------:|-------------:|-------------------------------:|
 |     Training dataset |  34799  | 67.13% |
 |   Validation dataset |  4410  | 8.51% |
 |         Test dataset |  12630  | 24.36% |
 |              **Total** |  51839                                ||
-
-![dataset-distribution]
 
 
 **Number of unique classes/labels in the training, validation and test data sets**
