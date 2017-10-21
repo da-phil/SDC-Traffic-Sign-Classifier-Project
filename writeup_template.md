@@ -17,7 +17,16 @@ The goals / steps of this project are the following:
 [image2]: ./examples/grayscale.jpg "Grayscaling"
 [image3]: ./examples/random_noise.jpg "Random Noise"
 [image4]: ./examples/placeholder.png "Traffic Sign 1"
-[image5]: ./examples/dataset_distribution_chart.png "Dataset sample distribution"
+[dataset-distribution]: ./examples/dataset_distribution_chart.png "Dataset sample distribution"
+
+[sign1]: ./extra-examples/sign1.jpg
+[sign2]: ./extra-examples/sign2.jpg
+[sign3]: ./extra-examples/sign3.jpg
+[sign4]: ./extra-examples/sign4.jpg
+[sign5]: ./extra-examples/sign5.jpg
+[sign6]: ./extra-examples/sign6.jpg
+[sign7]: ./extra-examples/sign7.jpg
+[sign8]: ./extra-examples/sign8.jpg
 
 ### Data Set Summary & Exploration
 
@@ -33,7 +42,7 @@ The goals / steps of this project are the following:
 |         Test dataset |  12630  | 24.36% |
 |              **Total** |  51839                                ||
 
-![Dataset sample distribution][image5]
+![dataset-distribution]
 
 
 **Number of unique classes/labels in the training, validation and test data sets**
@@ -178,12 +187,12 @@ If a well known architecture was chosen:
 
 Here are five German traffic signs that I found on the web:
 
-![alt text][image4] ![alt text][image5] ![alt text][image6] 
-![alt text][image7] ![alt text][image8]
+![sign1] ![sign2] ![sign3] ![sign4] ![sign5] ![sign6] ![sign7] ![sign8]
 
-The first image might be difficult to classify because ...
+The second and forth image might be difficult to classify correctly, because the second sign was slightly modified (head of person) andthe forth is strongly rotated.
 
-####2. Discuss the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
+#### Discussion of prediction results
+the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
 
 Here are the results of the prediction:
 
