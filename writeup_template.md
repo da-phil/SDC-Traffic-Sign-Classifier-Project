@@ -18,7 +18,7 @@ The goals / steps of this project are the following:
 [image3]: ./examples/random_noise.jpg "Random Noise"
 [image4]: ./examples/placeholder.png "Traffic Sign 1"
 [dataset-distribution]: ./examples/dataset_distribution_chart.png "Dataset sample distribution"
-
+[classes-distribution]: ./examples/dataset_class_distribution_chart.png "Distribution of classes in datasets"
 [sign1]: ./extra-examples/sign1.jpg
 [sign2]: ./extra-examples/sign2.jpg
 [sign3]: ./extra-examples/sign3.jpg
@@ -46,6 +46,8 @@ The goals / steps of this project are the following:
 
 
 **Number of unique classes/labels in the training, validation and test data sets**
+
+![classes-distribution]
 
 |    | Traffic sign description                           |   Training |   Validation |   Test |
 |---:|:---------------------------------------------------|-----------:|-------------:|-------:|
@@ -94,6 +96,8 @@ The goals / steps of this project are the following:
 | 42 | End of no passing by vehicles over 3.5 metric tons |        210 |           30 |     90 |
 
 This table exposes a drastic inbalance between the sample-sizes across all classes. I'd expect that training on this dataset might lead to biased classification and weak recognition of classes with less examples.
+For example the "Speed limit (20km/h)" as well as the "Go straight or left" sign is underrepresented in all three datasets.
+
 
 #### Exploratory visualization of the dataset
 
