@@ -20,8 +20,8 @@ The goals / steps of this project are the following:
 [dataset-distribution]: ./examples/dataset_distribution_chart.png "Dataset sample distribution"
 [classes-distribution]: ./examples/dataset_class_distribution_chart.png "Distribution of classes in datasets"
 [image-augmentations]: ./examples/image_augmentations.png "Example showing image augmentations, all randomly applied"
-[equalization1]: ./examples/euqualization1.png "Equalization with fixed clipLimit and variable grid_size"
-[equalization2]: ./examples/euqualization2.png "Equalization with variable clipLimit and fixed grid_size"
+[equalization1]: ./examples/equalization1.png "Equalization with fixed clipLimit and variable grid_size"
+[equalization2]: ./examples/equalization2.png "Equalization with variable clipLimit and fixed grid_size"
 
 [sign1]: ./extra-examples/sign1.jpg
 [sign2]: ./extra-examples/sign2.jpg
@@ -134,6 +134,7 @@ Plot with `clipLimit=2` and variable `tileGridSize`:
 ![equalization1]
 
 Plot with `tileGridSize=(4,4)` and variable `clipLimit`
+
 ![equalization1]
 
 
@@ -163,13 +164,13 @@ My final model consisted of the following layers:
 | Layer         		      |     Description                         | 
 |:---------------------:|:---------------------------------------------:| 
 | Input         		      | 32x32x3 RGB image                       |
-| Convolution           | kernel: 5x5, stride: 1x1, output: 32x32x64    |
-| Max pooling           | kernel: 2x2, stride: 2x2, output: 16x16x64    |
+| Convolution           | kernel: 5x5, stride: 1x1, output: 32x32x32    |
+| Max pooling           | kernel: 2x2, stride: 2x2, output: 16x16x32    |
 | Convolution           | kernel: 5x5, stride: 1x1, output: 16x16x64    |
-| Max pooling           | kernel: 2x2, stride: 2x2, output: 8x8x256     |
-| Convolution           | kernel: 5x5, stride: 1x1, output: 8x8x256     |
-| Max pooling           | kernel: 2x2, stride: 2x2, output: 4x4x256     |
-| Fully connected       | input: 4096, output: 400                      |
+| Max pooling           | kernel: 2x2, stride: 2x2, output: 8x8x64     |
+| Convolution           | kernel: 5x5, stride: 1x1, output: 8x8x128     |
+| Max pooling           | kernel: 2x2, stride: 2x2, output: 4x4x128     |
+| Fully connected       | input: 2048, output: 400                      |
 | RELU                  |                                               |
 | Dropout               | keep_prob: 0.6                                |
 | Fully connected       | input: 400, output: 200                       |
