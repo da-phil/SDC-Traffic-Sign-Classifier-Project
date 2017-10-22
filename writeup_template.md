@@ -19,7 +19,10 @@ The goals / steps of this project are the following:
 [image4]: ./examples/placeholder.png "Traffic Sign 1"
 [dataset-distribution]: ./examples/dataset_distribution_chart.png "Dataset sample distribution"
 [classes-distribution]: ./examples/dataset_class_distribution_chart.png "Distribution of classes in datasets"
-[image-augmentations]: ./examples/image_augmentations.png "Example showing image augmentations, all randomly applied "
+[image-augmentations]: ./examples/image_augmentations.png "Example showing image augmentations, all randomly applied"
+[equalization1]: ./examples/euqualization1.png "Equalization with fixed clipLimit and variable grid_size"
+[equalization2]: ./examples/euqualization2.png "Equalization with variable clipLimit and fixed grid_size"
+
 [sign1]: ./extra-examples/sign1.jpg
 [sign2]: ./extra-examples/sign2.jpg
 [sign3]: ./extra-examples/sign3.jpg
@@ -122,8 +125,18 @@ e.g. it make take advantage of the color-coding of particular signs as additiona
 
 On the other hand using colorspaces which seperate the luminance (or brightness) from the chrominance (or colors) allow for tweaking the image contrast while not changing the colors. Therefore the YUV and LAB colorspaces were considered, where the luminance channel was used for adaptive histogram equalization using `cv2.createCLAHE` function, the color channels were left as is. My assumption was that the network would benefit from a better image contrast, extracting patterns and structure more easily.
 
-**Image equalization and normalization**
-Images 
+**Image histogram equalization and normalization**
+Using the function `cv2.createCLAHE(clipLimit, tileGridSize)` I equalized the histograms of the luminance channels of the YUV and LAB colorspaces and the B/W images.
+I tried to find suitable parameters for `clipLimit`, `tileGridSize` by plotting images where I keep `clipLimit` fixed and `tileGridSize` variable and vice versa.
+
+Plot with `clipLimit=2` and variable `tileGridSize`:
+
+![equalization1]
+
+Plot with `tileGridSize=(4,4)` and variable `clipLimit`
+![equalization1]
+
+
 
 **Augmented dataset example**
 
