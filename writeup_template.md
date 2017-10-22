@@ -19,6 +19,7 @@ The goals / steps of this project are the following:
 [image4]: ./examples/placeholder.png "Traffic Sign 1"
 [dataset-distribution]: ./examples/dataset_distribution_chart.png "Dataset sample distribution"
 [classes-distribution]: ./examples/dataset_class_distribution_chart.png "Distribution of classes in datasets"
+[image-augmentations]: ./examples/image_augmentations.png "Example showing image augmentations, all randomly applied "
 [sign1]: ./extra-examples/sign1.jpg
 [sign2]: ./extra-examples/sign2.jpg
 [sign3]: ./extra-examples/sign3.jpg
@@ -132,7 +133,7 @@ The following augmentations were applied:
 * Image shifts in x and y axis: [0, 0.1] %
 * Zoom: [0, 0.1] %
 
-IMAGE orig -> IMAGE in new colorspace -> IMAGE augmented
+![image-augmentations]
 
 
 
