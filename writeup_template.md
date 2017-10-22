@@ -139,6 +139,8 @@ Plot with `tileGridSize=(4,4)` and variable `clipLimit`
 
 In the end I chose `clipLimit=5` and `tileGridSize=(5,5)`.
 
+Normalization was done as suggested, by this function: `(pixel - 128) / 128`
+
 **Augmented dataset example**
 
 The original dataset was augmented using `ImageDataGenerator` from `keras.preprocessing.image` in order to make the trained classifier more robost against deviations from the training dataset.
@@ -154,8 +156,7 @@ The following augmentations were applied:
 #### Model selection
 
 The first choice of course was the recommended LeCun5 network from the course material.
-It delivered a validation accuracy of around 90% while using unmodified training data but didn't really generalize well on new images.
-Besides it was impossible to get a validation accuracy higher than approx. 80% on the augmented dataset.
+It delivered a validation accuracy of slightly above 90% while using unmodified training data but didn't really generalize well on new images.
 
 In order to enable the network to learn more features and generalize better I added one more convolution + max pooling layer and increased the depth of the convolution layers.
 
@@ -180,11 +181,10 @@ My final model consisted of the following layers:
     
 #### Training
 
-Optimizer: Adam
-Batch size: 248
-Number of epochs: 60
-Learning rate: 0.001
-
+* Optimizer: Adam
+* Batch size: 248
+* Number of epochs: 60
+* Learning rate: 0.001
 
 Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
