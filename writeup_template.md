@@ -137,7 +137,7 @@ Plot with `tileGridSize=(4,4)` and variable `clipLimit`
 
 ![equalization1]
 
-
+In the end I chose `clipLimit=5` and `tileGridSize=(5,5)`.
 
 **Augmented dataset example**
 
@@ -180,13 +180,13 @@ My final model consisted of the following layers:
     
 #### Training
 
-optimizer:
-the batch size: 
-number of epochs:
-learning rate:
+Optimizer: Adam
+Batch size: 248
+Number of epochs: 60
+Learning rate: 0.001
 
 
-####4. Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
+Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
 My final model results were:
 * training set accuracy of ?
