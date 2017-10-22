@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import os, sys
 import pickle
 import numpy as np
 import csv
@@ -73,6 +74,56 @@ def visualize_dataset(data, indexes, imgs_per_class=10, classes=43, shuffle=Fals
     return fig
 
 
+def equalize_dataset(data, colorspace_conversion=None):
+    clipLimit = 1.0
+    grid_size = (2,2)
+    clahe = cv2.createCLAHE(clipLimit=clipLimit, tileGridSize=grid_size)
+
+    if colorspace == "BW":
+        data_norm = np.zeros((data.shape[0], data.shape[1], data.shape[2], 1), dtype=np.uint8)
+    else:
+        data_norm = np.copy(data)
+
+    if colorspace_conversion == "RGB":
+        print("no equalization for RGB images!")
+        # no equalization for RGB images, it only makes sense for brightness or luminosity channels!
+
+    elif colorspace_conversion == "YUV":
+        for i, img in enumerate(data):
+            data_norm[i] = cv2.cvtColor(img, cv2.COLOR_BGR2YUV)
+            y, u, v = cv2.split(data_norm[i])
+            y = clahe.apply(y)
+            data_norm[i] = np.reshape(cv2.merge((y,u,v)), data_norm.shape[1:])
+
+    elif colorspace_conversion == "LAB":
+        for i, img in enumerate(data):
+            data_norm[i] = cv2.cvtColor(img, cv2.COLOR_BGR2Lab)
+            l, a, b = cv2.split(data_norm[i])
+            l = clahe.apply(l)
+            data_norm[i] = np.reshape(cv2.merge((l,a,b)), data_norm.shape[1:])
+
+    elif colorspace_conversion=="BW":
+        for i, img in enumerate(data):
+            img = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+            data_norm[i] = np.reshape(clahe.apply(img),  data_norm.shape[1:])
+
+        # update image_shape for one layer b/w image
+        image_shape = data_norm.shape[1:]
+
+    else:
+        print("No colorspace conversion set!")
+        data_norm[i] = clahe.apply(data[i])
+
+    return data_norm
+
+
+def center_normaize(data, mean, std):
+    data = data.astype('float32')
+    return (data - mean) / std
+
+
+
+
 if __name__ == '__main__':
 
     with open(training_file, mode='rb') as f:
@@ -121,10 +172,18 @@ if __name__ == '__main__':
         'Validation' : [len(class_indexes_valid[i][0]) for i in range(n_classes)],
         'Test'       : [len(class_indexes_test[i][0])  for i in range(n_classes)]
     })
+    df_percent = pd.DataFrame({
+        'Traffic sign description': labels,
+        'Training'   : [len(class_indexes_train[i][0]) / n_train * 100       for i in range(n_classes)],
+        'Validation' : [len(class_indexes_valid[i][0]) / n_validation * 100  for i in range(n_classes)],
+        'Test'       : [len(class_indexes_test[i][0])  / n_test * 100        for i in range(n_classes)]
+    })
+
 
     pd.options.display.width = 100
     pd.options.display.max_colwidth = 90
     df = df.reindex(columns=['Traffic sign description', 'Training', 'Validation', 'Test'])
+    df_percent = df_percent.reindex(columns=['Traffic sign description', 'Training', 'Validation', 'Test'])
     print("Statistics Table: ")
     print(tabulate(df, headers="keys", tablefmt='pipe'))
 
@@ -135,20 +194,67 @@ if __name__ == '__main__':
     print("| %20s |  %d  | %.2f%% |" % ("Test dataset", n_test, 100*n_test/n_total))
     print("| %20s |  %d  |        |" % ("Total", n_total))
 
-
-    # Pie chart, where the slices will be ordered and plotted counter-clockwise:
+    fig1 = plt.figure()
+    df_percent.plot.bar(width=0.8, alpha=0.4)
+    plt.xlabel('Traffic sign classes')
+    plt.ylabel('Samples in Dataset [%]')
+    fig1.savefig('./examples/dataset_class_distribution_chart.png', bbox_inches='tight')
+    plt.show(True)
+    plt.close()
+    
     plotlabels = 'Training', 'Validation', 'Test'
     sizes = [100*n_train/n_total, 100*n_validation/n_total, 100*n_test/n_total]
     explode = (0.1, 0.1, 0.1)
-    fig1, ax1 = plt.subplots(figsize=(3,3))
+    fig2, ax1 = plt.subplots(figsize=(3,3))
     ax1.pie(sizes, explode=explode, labels=plotlabels, autopct='%1.1f%%', shadow=True, startangle=90)
     ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-    fig1.savefig('./examples/dataset_distribution_chart.png', bbox_inches='tight')
+    fig2.savefig('./examples/dataset_distribution_chart.png', bbox_inches='tight')
+    plt.show()
+    plt.close()
+
+    fig3 = visualize_dataset(X_train, class_indexes_train, imgs_per_class=5, classes=5, shuffle=True)
+    fig3.savefig('./examples/dataset_example.png', bbox_inches='tight')
     plt.show()  
     plt.close()
 
+    X_train_norm = equalize_dataset(X_train, colorspace)
+    print("before normalization: min val: %f, max val: %f" % (np.min(X_train_norm), np.max(X_train_norm)))
+    white_pixels_cnt = len(np.where(X_train == 255)[0])
+    black_pixels_cnt = len(np.where(X_train == 0)[0])
+    print("White & black pixels before equalization: %d, %d" % (white_pixels_cnt, black_pixels_cnt))
+    white_pixels_cnt = len(np.where(X_train_norm == 255)[0])
+    black_pixels_cnt = len(np.where(X_train_norm == 0)[0])
+    print("White & black pixels after equalization: %d, %d" % (white_pixels_cnt, black_pixels_cnt))
 
-    fig2 = visualize_dataset(X_train, class_indexes_train, imgs_per_class=5, classes=5, shuffle=True)
-    fig2.savefig('./examples/dataset_example.png', bbox_inches='tight')
-    plt.show()  
-    plt.close()
+    # Value normalization into -1 to +1 range
+    X_mean = 128
+    X_std = 128
+    X_train_norm = center_normaize(X_train_norm, X_mean, X_std)
+    print("normalized data with mean=%.3f and scale=%.3f" % (X_mean, X_std))
+
+    datagen = ImageDataGenerator(
+        featurewise_center=False,
+        featurewise_std_normalization=False,
+        samplewise_center=False,
+        samplewise_std_normalization=False,
+        rotation_range=20,
+        width_shift_range=0.1,
+        height_shift_range=0.1,
+        horizontal_flip=False,
+        vertical_flip=False,
+        zca_whitening=False,
+        zca_epsilon=1e-7,
+        shear_range=0,
+        zoom_range=0.1,
+        rescale=None
+    )
+
+    datagen.fit(X_train_norm, augment=True)
+
+    X_train_batch, y_train_batch = datagen.flow(X_train_norm, y_train, batch_size=2500, shuffle=True).next()
+    indexes  = []
+    for i in range(n_classes):
+        indexes.append(np.where(y_train_batch==i))
+
+    print("X_train_batch.shape: ", X_train_batch.shape)
+    visualize_dataset(X_train_batch, indexes, imgs_per_class=5, classes=5, shuffle=True)
