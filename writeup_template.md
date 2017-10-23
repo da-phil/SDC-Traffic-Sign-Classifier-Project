@@ -238,21 +238,7 @@ The second and forth image might be difficult to classify correctly, because the
 #### Discussion of prediction results
 Using the random traffic signs above and feeding them into the trained network gave the following softmax probabilities as predictions:
 
-![pred_tf1]
-
-![pred_tf2]
-
-![pred_tf3]
-
-![pred_tf4]
-
-![pred_tf5]
-
-![pred_tf6]
-
-![pred_tf7]
-
-![pred_tf8]
+![pred_tf1] ![pred_tf2] ![pred_tf3] ![pred_tf4] ![pred_tf5] ![pred_tf6] ![pred_tf7] ![pred_tf8]
 
 
 The model was able to correctly guess 6 of the 8 traffic signs, which gives an accuracy of 75%, which is an improvement over the 50% accuracy with the original LeCun5 network.
