@@ -21,7 +21,8 @@ The goals / steps of this project are the following:
 [equalization2]: ./examples/equalization2.png "Equalization with variable clipLimit and fixed grid_size"
 [featuremap_conv1_1]: ./examples/featuremap_conv1_1.png
 [featuremap_conv2_1]: ./examples/featuremap_conv2_1.png
-
+[featuremap_conv1_2]: ./examples/featuremap_conv1_2.png
+[featuremap_conv2_2]: ./examples/featuremap_conv2_2.png
 [sign1]: ./extra-examples/sign1.jpg
 [sign2]: ./extra-examples/sign2.jpg
 [sign3]: ./extra-examples/sign3.jpg
@@ -40,6 +41,8 @@ The goals / steps of this project are the following:
 [pred_tf7]: ./examples/pred_tf6.png
 [pred_tf8]: ./examples/pred_tf7.png
 [pred_tf_test1]: examples/pred_tf_test1.png
+
+
 ### Data Set Summary & Exploration
 
 **Stats of the dataset**
@@ -258,12 +261,22 @@ However even after several attempts to re-train the network it always got the "P
 
 ### Visualization of the networks featuremaps
 
-Visualization of the first and second convolutional layers after evaluating the model only on "Speed limit (20km/h)" (class 0) signs.
+Visualization of the first and second convolutional layers after evaluating the model only on "Speed limit (20km/h)" (class 0) signs. It's an interesting obv
 
-#### ConvLayer1:
+#### ConvLayer1 (low test accuracy):
 
 ![featuremap_conv1_1]
 
-#### ConvLayer2:
+#### ConvLayer2 (low test accuracy, with dead units):
 
 ![featuremap_conv2_1]
+
+
+#### ConvLayer1 (high test accuracy):
+
+![featuremap_conv1_2]
+
+#### ConvLayer2 (high test accuracy):
+
+![featuremap_conv2_2]
+
