@@ -102,12 +102,14 @@ The goals / steps of this project are the following:
 This table exposes a drastic inbalance between the sample-sizes across all classes. I'd expect that training on this dataset might lead to biased classification and weak recognition of classes with less examples.
 For example the "Speed limit (20km/h)" as well as the "Go straight or left" sign is underrepresented in all three datasets.
 
-In order to overcome a biased prediction I balanced the training dateset by equalizing the number of training examples per class.
-As a reference count I used the count of the class which has the most samples (class 2, samples = 2010), because I didn't want to discard any samples from this class.
-Having 2010 samples from all 43 classes leads to a training set of 86430 samples. In the random image autmentation later I make sure that all the samples which appear several times in the training set look different due to the augmentations.
+In order to overcome a biased prediction I balanced the training dateset by equalizing the number of training examples per class, i.e. adding copies of instances from the under-represented class, called over-sampling, or more formally sampling with replacement.
+As a reference count I used the count of the class which has the most samples (class 2, samples = 2010).
+Having 2010 samples from all 43 classes leads to a new balanced training set of 86430 samples. In the random image autmentation later I make sure that all the samples which appear several times in the training set look different due to the random augmentations.
 
-The following article discusses another solution to an inbalanced training dataset, it penalizes the reward for the majority class, that means re-weighting the loss function:
-https://blog.fineighbor.com/tensorflow-dealing-with-imbalanced-data-eb0108b10701?gi=c324270bdfd5
+The following articles discusses other solutions to an inbalanced training dataset, for example it penalizes the reward for the majority class, that means re-weighting the loss function (3rd link):
+* https://www.kdnuggets.com/2017/06/7-techniques-handle-imbalanced-data.html
+* https://machinelearningmastery.com/tactics-to-combat-imbalanced-classes-in-your-machine-learning-dataset
+* https://blog.fineighbor.com/tensorflow-dealing-with-imbalanced-data-eb0108b1070 (loss re-weighting example)
 
 #### Exploratory visualization of the dataset
 
