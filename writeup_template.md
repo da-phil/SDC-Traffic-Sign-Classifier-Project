@@ -32,14 +32,14 @@ The goals / steps of this project are the following:
 [sign7]: ./extra-examples/sign7.jpg
 [sign8]: ./extra-examples/sign8.jpg
 
-[pred_tf1]: ./extra-examples/pred_tf1.png
-[pred_tf2]: ./extra-examples/pred_tf2.png
-[pred_tf3]: ./extra-examples/pred_tf3.png
-[pred_tf4]: ./extra-examples/pred_tf4.png
-[pred_tf5]: ./extra-examples/pred_tf5.png
-[pred_tf6]: ./extra-examples/pred_tf6.png
-[pred_tf7]: ./extra-examples/pred_tf7.png
-[pred_tf8]: ./extra-examples/pred_tf8.png
+[pred_tf1]: ./examples/pred_tf0.png
+[pred_tf2]: ./examples/pred_tf1.png
+[pred_tf3]: ./examples/pred_tf2.png
+[pred_tf4]: ./examples/pred_tf3.png
+[pred_tf5]: ./examples/pred_tf4.png
+[pred_tf6]: ./examples/pred_tf5.png
+[pred_tf7]: ./examples/pred_tf6.png
+[pred_tf8]: ./examples/pred_tf7.png
 
 ### Data Set Summary & Exploration
 
