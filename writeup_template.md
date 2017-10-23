@@ -137,7 +137,7 @@ Plot with `clipLimit=2` and variable `tileGridSize`:
 
 Plot with `tileGridSize=(4,4)` and variable `clipLimit`
 
-![equalization1]
+![equalization2]
 
 In the end I chose `clipLimit=5` and `tileGridSize=(5,5)`.
 
