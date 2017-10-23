@@ -247,22 +247,28 @@ However even after several attempts to re-train the network it always got the "P
 
 ### Visualization of the networks featuremaps
 
-Visualization of the first and second convolutional layers after evaluating the model only on "Speed limit (20km/h)" (class 0) signs. It's an interesting obv
+Visualization of the first and second convolutional layers have been done from time to time to see how which features the model learns. It also helped me to spot a problem, where I probably chose a too high learning rate, leading to dead ReLUs and therefore dead features due to backprop.
+The first featuremaps which are the result of a model with low test accuracy (~87%) shows the effect of dead units in the second conv layer, the second featuremaps are from the final model with a high test accuracy (97.2%) which show features in all units.
 
-#### ConvLayer1 (low test accuracy):
+
+#### Model with low test accuracy which was trained with class 12: Priority road
+
+**ConvLayer1:**
 
 ![featuremap_conv1_1]
 
-#### ConvLayer2 (low test accuracy, with dead units):
+**ConvLayer2 (showing dead units):**
 
 ![featuremap_conv2_1]
 
 
-#### ConvLayer1 (high test accuracy):
+#### Model with high test accuracy which was trained with class 0: Speed limit (20km/h)
+
+**ConvLayer1:**
 
 ![featuremap_conv1_2]
 
-#### ConvLayer2 (high test accuracy):
+**ConvLayer2:**
 
 ![featuremap_conv2_2]
 
