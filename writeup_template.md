@@ -14,14 +14,13 @@ The goals / steps of this project are the following:
 [//]: # (Image References)
 
 [dataset-example]: ./examples/dataset_example.png "Visualization of dataset"
-[image2]: ./examples/grayscale.jpg "Grayscaling"
-[image3]: ./examples/random_noise.jpg "Random Noise"
-[image4]: ./examples/placeholder.png "Traffic Sign 1"
 [dataset-distribution]: ./examples/dataset_distribution_chart.png "Dataset sample distribution"
 [classes-distribution]: ./examples/dataset_class_distribution_chart.png "Distribution of classes in datasets"
 [image-augmentations]: ./examples/image_augmentations.png "Example showing image augmentations, all randomly applied"
 [equalization1]: ./examples/equalization1.png "Equalization with fixed clipLimit and variable grid_size"
 [equalization2]: ./examples/equalization2.png "Equalization with variable clipLimit and fixed grid_size"
+[featuremap_conv1_1]: ./examples/featuremap_conv1_1.png
+[featuremap_conv2_1]: ./examples/featuremap_conv2_1.png
 
 [sign1]: ./extra-examples/sign1.jpg
 [sign2]: ./extra-examples/sign2.jpg
@@ -40,7 +39,7 @@ The goals / steps of this project are the following:
 [pred_tf6]: ./examples/pred_tf5.png
 [pred_tf7]: ./examples/pred_tf6.png
 [pred_tf8]: ./examples/pred_tf7.png
-
+[pred_tf_test1]: examples/pred_tf_test1.png
 ### Data Set Summary & Exploration
 
 **Stats of the dataset**
@@ -167,7 +166,7 @@ The following augmentations were applied:
 #### Model selection
 
 The first choice of course was the recommended LeCun5 network from the course material.
-It delivered a validation accuracy of slightly above 90% while using unmodified training data but didn't really generalize well on new images (accuracy was approx. 50%).
+It delivered a validation and test accuracy of slightly above 90% while using unmodified training data but didn't really generalize well on new images (accuracy was approx. 50%).
 
 In order to enable the network to learn more features and generalize better I added one more convolution + max pooling layer and increased the depth of the convolution layers.
 
@@ -199,10 +198,12 @@ My final model consisted of the following layers:
 
 Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
 
+In the beginning I was training the network on the normal training dataset and 
+
 My final model results were:
-* training set accuracy of ?
-* validation set accuracy of ? 
-* test set accuracy of ?
+* training set accuracy: 0.998
+* validation set accuracy: 0.981
+* test set accuracy: 0.972
 
 If an iterative approach was chosen:
 * What was the first architecture that was tried and why was it chosen?
@@ -216,20 +217,23 @@ If a well known architecture was chosen:
 * Why did you believe it would be relevant to the traffic sign application?
 * How does the final model's accuracy on the training, validation and test set provide evidence that the model is working well?
  
+ Testing on the test dataset gives an accuracy of 97.4% accuracy, where the accuracies are distributed among the class as follows:
+
+![pred_tf_test1]
+
+This distribution clearly shows that the network might have the largest errors with classes 27 and 30 when evaluated on new images.
 
 ### Test a Model on New Images
 
 #### Picking random German traffic signs from the web
-Here are five German traffic signs that I found on the web:
+I chose 8 random German traffic signs which I found on the web and also included one for testing one of the "weakly" trained classes (class 27 - Pedestrians) to test the hypothesis from above.
 
 ![sign1] ![sign2] ![sign3] ![sign4] ![sign5] ![sign6] ![sign7] ![sign8]
 
-The second and forth image might be difficult to classify correctly, because the second sign was slightly modified (head of person) andthe forth is strongly rotated.
+The second and forth image might be difficult to classify correctly, because the second sign was slightly modified (head of person) and the forth is strongly rotated.
 
 #### Discussion of prediction results
-the model's predictions on these new traffic signs and compare the results to predicting on the test set. At a minimum, discuss what the predictions were, the accuracy on these new predictions, and compare the accuracy to the accuracy on the test set (OPTIONAL: Discuss the results in more detail as described in the "Stand Out Suggestions" part of the rubric).
-
-Here are the results of the prediction:
+Using the random traffic signs above and feeding them into the trained network gave the following softmax probabilities as predictions:
 
 ![pred_tf1]
 
@@ -248,26 +252,18 @@ Here are the results of the prediction:
 ![pred_tf8]
 
 
+The model was able to correctly guess 6 of the 8 traffic signs, which gives an accuracy of 75%, which is an improvement over the 50% accuracy with the original LeCun5 network.
+However even after several attempts to re-train the network it always got the "Pedestrian" sign (class 27) wrong, even though I'm training the network with a balanced dataset. Maybe other techniques mentioned in the links further up might be worth looking at.
 
-
-The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
-
-#### Describe how certain the model is when predicting on each of the five new images by looking at the softmax probabilities for each prediction. Provide the top 5 softmax probabilities for each image along with the sign type of each probability. (OPTIONAL: as described in the "Stand Out Suggestions" part of the rubric, visualizations can also be provided such as bar charts)
-
-
-For the first image, the model is relatively sure that this is a stop sign (probability of 0.6), and the image does contain a stop sign. The top five soft max probabilities were
-
-| Probability         	|     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| .60         			| Stop sign   									| 
-| .20     				| U-turn 										|
-| .05					| Yield											|
-| .04	      			| Bumpy Road					 				|
-| .01				    | Slippery Road      							|
-
-
-For the second image ... 
 
 ### Visualization of the networks featuremaps
 
+Visualization of the first and second convolutional layers after evaluating the model only on "Speed limit (20km/h)" (class 0) signs.
 
+#### ConvLayer1:
+
+![featuremap_conv1_1]
+
+#### ConvLayer2:
+
+![featuremap_conv2_1]
