@@ -32,6 +32,15 @@ The goals / steps of this project are the following:
 [sign7]: ./extra-examples/sign7.jpg
 [sign8]: ./extra-examples/sign8.jpg
 
+[pred_tf1]: ./extra-examples/pred_tf1.png
+[pred_tf2]: ./extra-examples/pred_tf2.png
+[pred_tf3]: ./extra-examples/pred_tf3.png
+[pred_tf4]: ./extra-examples/pred_tf4.png
+[pred_tf5]: ./extra-examples/pred_tf5.png
+[pred_tf6]: ./extra-examples/pred_tf6.png
+[pred_tf7]: ./extra-examples/pred_tf7.png
+[pred_tf8]: ./extra-examples/pred_tf8.png
+
 ### Data Set Summary & Exploration
 
 **Stats of the dataset**
@@ -222,13 +231,23 @@ the model's predictions on these new traffic signs and compare the results to pr
 
 Here are the results of the prediction:
 
-| Image			        |     Prediction	        					| 
-|:---------------------:|:---------------------------------------------:| 
-| Stop Sign      		| Stop sign   									| 
-| U-turn     			| U-turn 										|
-| Yield					| Yield											|
-| 100 km/h	      		| Bumpy Road					 				|
-| Slippery Road			| Slippery Road      							|
+![pred_tf1]
+
+![pred_tf2]
+
+![pred_tf3]
+
+![pred_tf4]
+
+![pred_tf5]
+
+![pred_tf6]
+
+![pred_tf7]
+
+![pred_tf8]
+
+
 
 
 The model was able to correctly guess 4 of the 5 traffic signs, which gives an accuracy of 80%. This compares favorably to the accuracy on the test set of ...
