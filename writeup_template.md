@@ -132,6 +132,7 @@ The following articles discusses other solutions to an inbalanced training datas
 #### Preprocessing pipeline
 
 **Colorspaces considerations**
+
 As the traffic signs are available as RGB images it makes sense to stick to RGB colorspace and use it for training.
 Unlike other colorspaces RGB should give the trained network the same intuition as the human when it comes to color perception,
 e.g. it make take advantage of the color-coding of particular signs as additional cues for the classification, besids the structure and patterns.
@@ -139,6 +140,7 @@ e.g. it make take advantage of the color-coding of particular signs as additiona
 On the other hand using colorspaces which seperate the luminance (or brightness) from the chrominance (or colors) allow for tweaking the image contrast while not changing the colors. Therefore the YUV and LAB colorspaces were considered, where the luminance channel was used for adaptive histogram equalization using `cv2.createCLAHE` function, the color channels were left as is. My assumption was that the network would benefit from a better image contrast, extracting patterns and structure more easily.
 
 **Image histogram equalization and normalization**
+
 Using the function `cv2.createCLAHE(clipLimit, tileGridSize)` I equalized the histograms of the luminance channels of the YUV and LAB colorspaces and the B/W images.
 I tried to find suitable parameters for `clipLimit`, `tileGridSize` by plotting images where I keep `clipLimit` fixed and `tileGridSize` variable and vice versa.
 
