@@ -156,7 +156,7 @@ The following augmentations were applied:
 #### Model selection
 
 The first choice of course was the recommended LeCun5 network from the course material.
-It delivered a validation accuracy of slightly above 90% while using unmodified training data but didn't really generalize well on new images.
+It delivered a validation accuracy of slightly above 90% while using unmodified training data but didn't really generalize well on new images (accuracy was approx. 50%).
 
 In order to enable the network to learn more features and generalize better I added one more convolution + max pooling layer and increased the depth of the convolution layers.
 
