@@ -171,21 +171,16 @@ My final model (model1) consisted of the following layers:
 
 | Layer         		      |     Description                         | 
 |:---------------------:|:---------------------------------------------:| 
-| Input         		| input: 32x32x1 Grayscale image                    |
-| Convolution           | kernel: 5x5, stride: 1x1, output: 32x32x32    |
-| ELU                   |                                               |
+| input                 | input: 32x32x1 Grayscale image                |
+| Convolution           | kernel: 5x5, stride: 1x1, output: 32x32x32, activation: ELU    |
 | Max pooling           | kernel: 2x2, stride: 2x2, output: 16x16x32    |
-| Convolution           | kernel: 5x5, stride: 1x1, output: 16x16x64    |
-| ELU                   |                                               |
+| Convolution           | kernel: 5x5, stride: 1x1, output: 16x16x64, activation: ELU     |
 | Max pooling           | kernel: 2x2, stride: 2x2, output: 8x8x64     |
-| Convolution           | kernel: 5x5, stride: 1x1, output: 8x8x128     |
-| ELU                   |                                               |
+| Convolution           | kernel: 5x5, stride: 1x1, output: 8x8x128, activation: ELU      |
 | Max pooling           | kernel: 2x2, stride: 2x2, output: 4x4x128     |
-| Fully connected       | input: 2048, output: 400                      |
-| ELU                  |                                               |
+| Fully connected       | input: 2048, output: 400, activation: ELU     |
 | Dropout               | keep_prob: 0.2                                |
-| Fully connected       | input: 400, output: 200                       |
-| ELU                  |                                               |
+| Fully connected       | input: 400, output: 200, activation: ELU      |
 | Dropout               | keep_prob: 0.2                                |
 | Fully connected out   | input: 200, output: 43                        |    
 
@@ -196,16 +191,12 @@ Additionally I used keras (as a practice) to test another model (model2) which h
 | Layer         		      |     Description                         | 
 |:---------------------:|:---------------------------------------------:| 
 | Input         		|  input: 32x32x1 Grayscale image                   |
-| Convolution           |  kernel: 3x3  output: 32x32x64                | 
-| ELU                   |                                               |
+| Convolution           |  kernel: 3x3  output: 32x32x64, activation: ELU                 | 
 | Max pooling           |  kernel: 2x2, stride: 2x2, output: 15x15x64   |
-| Convolution           |  kernel: 3x3  output: 13x13x128               |
-| ELU                   |                                               |
+| Convolution           |  kernel: 3x3  output: 13x13x128, activation: ELU                |
 | Max pooling           |  kernel: 2x2, stride: 2x2, output: 6x6x128    |
 | Dropout               |  keep_prob: 0.2                               |
-| ELU                   |                                               |
-| Fully connected       |  output: 256                                  |
-| ELU                   |                                               |
+| Fully connected       |  output: 256, activation: ELU                 |
 | Dropout               |  keep_prob: 0.2                               |
 | Fully connected       |  output: 43                                   |
 
