@@ -1,16 +1,5 @@
 # Traffic Sign Recognition
 
-**Build a Traffic Sign Recognition Project**
-
-The goals / steps of this project are the following:
-* Load the data set (see below for links to the project data set)
-* Explore, summarize and visualize the data set
-* Design, train and test a model architecture
-* Use the model to make predictions on new images
-* Analyze the softmax probabilities of the new images
-* Summarize the results with a written report
-
-
 [//]: # (Image References)
 
 [dataset-example]: ./examples/dataset_example.png "Visualization of dataset"
@@ -41,7 +30,7 @@ The goals / steps of this project are the following:
 [pred_tf7]: ./examples/pred_tf6.png
 [pred_tf8]: ./examples/pred_tf7.png
 [pred_tf_test1]: examples/pred_tf_test1.png
-
+[pred_tf_test2]: examples/pred_tf_test2.png
 
 ### Data Set Summary & Exploration
 
@@ -176,16 +165,21 @@ It delivered a validation and test accuracy of slightly above 90% while using un
 In order to enable the network to learn more features and generalize better I added one more convolution + max pooling layer and increased the depth of the convolution layers.
 After the first long training runs where the accuracy flattened out at around 80% validation accuracy I discovered that I had dead ReLU units (see section 'Visualization of the networks featuremaps') and therefore I chose to use ELU activation units instead of ReLUs to combat that issue, it also reduces mean in the outputs but has higher computational costs due to exp() function. After long training runs with ELUs I never experienced dead activation units again, so I kept them.
 
+After playing around with the YUV and LAB color spaces I found out that grayscale images worked not only faster but also lead to a higher accuracy, therefore I did all further tests only on grayscale images.
+
 My final model (model1) consisted of the following layers:
 
 | Layer         		      |     Description                         | 
 |:---------------------:|:---------------------------------------------:| 
-| Input         		| input: 32x32x3 RGB image                       |
+| Input         		| input: 32x32x1 Grayscale image                    |
 | Convolution           | kernel: 5x5, stride: 1x1, output: 32x32x32    |
+| ELU                   |                                               |
 | Max pooling           | kernel: 2x2, stride: 2x2, output: 16x16x32    |
 | Convolution           | kernel: 5x5, stride: 1x1, output: 16x16x64    |
+| ELU                   |                                               |
 | Max pooling           | kernel: 2x2, stride: 2x2, output: 8x8x64     |
 | Convolution           | kernel: 5x5, stride: 1x1, output: 8x8x128     |
+| ELU                   |                                               |
 | Max pooling           | kernel: 2x2, stride: 2x2, output: 4x4x128     |
 | Fully connected       | input: 2048, output: 400                      |
 | ELU                  |                                               |
@@ -195,23 +189,27 @@ My final model (model1) consisted of the following layers:
 | Dropout               | keep_prob: 0.2                                |
 | Fully connected out   | input: 200, output: 43                        |    
 
+Total trainable parameters: 1 229 978
 
-Additionally I used keras (as a practice) to test another model (model2):
+Additionally I used keras (as a practice) to test another model (model2) which has wider but not as deep as model1 because it has one less convolution layer.
 
 | Layer         		      |     Description                         | 
 |:---------------------:|:---------------------------------------------:| 
-| Input         		|  input: 32x32x3 RGB image                     |
-| Convolution           |  kernel: 3x3  output: 32x32x64                |     
+| Input         		|  input: 32x32x1 Grayscale image                   |
+| Convolution           |  kernel: 3x3  output: 32x32x64                | 
+| ELU                   |                                               |
 | Max pooling           |  kernel: 2x2, stride: 2x2, output: 15x15x64   |
-| Convolution           |  kernel: 3x3  output: 13x13x128               |   
+| Convolution           |  kernel: 3x3  output: 13x13x128               |
+| ELU                   |                                               |
 | Max pooling           |  kernel: 2x2, stride: 2x2, output: 6x6x128    |
 | Dropout               |  keep_prob: 0.2                               |
-| Fully connected       |  output: 4608                                 |
 | ELU                   |                                               |
 | Fully connected       |  output: 256                                  |
 | ELU                   |                                               |
 | Dropout               |  keep_prob: 0.2                               |
 | Fully connected       |  output: 43                                   |
+
+Total trainable parameters: 1 265 451
 
 #### Training
 
@@ -220,7 +218,7 @@ Additionally I used keras (as a practice) to test another model (model2):
 * Number of epochs: 60
 * Learning rate: 0.001
 
-In the beginning I was training the network on the normal training dataset and later only on the balanced dataset, to achieve a less biased prediction. After realizing that the test set accuracy was slightly lower than the validation set accuracy I assumed overfitting and massivly reduced the parameter `keep_prop` in the dropout layers from `0.7` down to a value of `0.2`.
+In the beginning I was training the network on the normal training dataset and later only on the oversampled balanced dataset, to achieve a less biased prediction. After realizing that the test set accuracy was slightly lower than the validation set accuracy I assumed overfitting and massivly reduced the parameter `keep_prop` in the dropout layers from `0.7` down to a value of `0.2` which didn't really lower the accuracy but helped reducing overfitting.
 
 My final model1 results were:
 * training set accuracy: 1.0
@@ -232,17 +230,18 @@ My model2 results were:
 * validation set accuracy: 0.971
 * test set accuracy: 0.973
 
-Surprisingly model1 - although having way less parameters - scored a higher overall accuracy compared to model2.
-Because validation and test accuracy are slightly different for model1 I think there is a higher degree of overfitting in model1, whereas model2 has very similar accuracy values, meaning that the model generalizes better on the presented data due to higher amount of parameters.
+The deeper model1 scored a higher overall accuracy compared to model2 which is wider and has almost the same amount of parameters.
+Because validation and test accuracy are slightly different for model1 I think there is a slightly higher degree of overfitting in model1, whereas model2 has very similar accuracy values, meaning that the model generalizes better on the presented data.
 
+When testing model1 on each class in the test set the accuracy is unexpectedly inbalanced across all classes, especially class 27 and 30 show quite low accuracy.
 
-One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
+![pred_tf_test2]
 
-Testing on the test dataset gives an accuracy of 97.4% accuracy, where the accuracies are distributed among the class as follows:
+I therefore carefully trained the network for only a few epochs with a biased training set which only consisted of training examples from class 27 and 30. After this fine-tuning the prediction accuracy distribution looks way better:
 
 ![pred_tf_test1]
 
-This distribution clearly shows that the network might have the largest errors with classes 27 and 30 when evaluated on new images.
+This distribution clearly shows that the network still might have the largest errors with classes 27 and 30 when evaluated on new images. One reason for this inbalance might be the low count of examples in all datasets, especially for class 27 (training: 210, validation: 30, test: 60). 
 
 ### Test a Model on New Images
 
