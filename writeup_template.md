@@ -174,12 +174,13 @@ The first choice of course was the recommended LeCun5 network from the course ma
 It delivered a validation and test accuracy of slightly above 90% while using unmodified training data but didn't really generalize well on new images (accuracy was approx. 50%).
 
 In order to enable the network to learn more features and generalize better I added one more convolution + max pooling layer and increased the depth of the convolution layers.
+After the first long training runs where the accuracy flattened out at around 80% validation accuracy I discovered that I had dead ReLU units (see section 'Visualization of the networks featuremaps') and therefore I chose to use ELU activation units instead of ReLUs to combat that issue, it also reduces mean in the outputs but has higher computational costs due to exp() function. After long training runs with ELUs I never experienced dead activation units again, so I kept them.
 
-My final model consisted of the following layers:
+My final model (model1) consisted of the following layers:
 
 | Layer         		      |     Description                         | 
 |:---------------------:|:---------------------------------------------:| 
-| Input         		      | 32x32x3 RGB image                       |
+| Input         		| input: 32x32x3 RGB image                       |
 | Convolution           | kernel: 5x5, stride: 1x1, output: 32x32x32    |
 | Max pooling           | kernel: 2x2, stride: 2x2, output: 16x16x32    |
 | Convolution           | kernel: 5x5, stride: 1x1, output: 16x16x64    |
@@ -187,13 +188,31 @@ My final model consisted of the following layers:
 | Convolution           | kernel: 5x5, stride: 1x1, output: 8x8x128     |
 | Max pooling           | kernel: 2x2, stride: 2x2, output: 4x4x128     |
 | Fully connected       | input: 2048, output: 400                      |
-| RELU                  |                                               |
-| Dropout               | keep_prob: 0.6                                |
+| ELU                  |                                               |
+| Dropout               | keep_prob: 0.2                                |
 | Fully connected       | input: 400, output: 200                       |
-| RELU                  |                                               |
-| Dropout               | keep_prob: 0.6                                |
+| ELU                  |                                               |
+| Dropout               | keep_prob: 0.2                                |
 | Fully connected out   | input: 200, output: 43                        |    
-    
+
+
+Additionally I used keras (as a practice) to test another model (model2):
+
+| Layer         		      |     Description                         | 
+|:---------------------:|:---------------------------------------------:| 
+| Input         		|  input: 32x32x3 RGB image                     |
+| Convolution           |  kernel: 3x3  output: 32x32x64                |     
+| Max pooling           |  kernel: 2x2, stride: 2x2, output: 15x15x64   |
+| Convolution           |  kernel: 3x3  output: 13x13x128               |   
+| Max pooling           |  kernel: 2x2, stride: 2x2, output: 6x6x128    |
+| Dropout               |  keep_prob: 0.2                               |
+| Fully connected       |  output: 4608                                 |
+| ELU                   |                                               |
+| Fully connected       |  output: 256                                  |
+| ELU                   |                                               |
+| Dropout               |  keep_prob: 0.2                               |
+| Fully connected       |  output: 43                                   |
+
 #### Training
 
 * Optimizer: Adam
@@ -201,20 +220,23 @@ My final model consisted of the following layers:
 * Number of epochs: 60
 * Learning rate: 0.001
 
-Describe the approach taken for finding a solution and getting the validation set accuracy to be at least 0.93. Include in the discussion the results on the training, validation and test sets and where in the code these were calculated. Your approach may have been an iterative process, in which case, outline the steps you took to get to the final solution and why you chose those steps. Perhaps your solution involved an already well known implementation or architecture. In this case, discuss why you think the architecture is suitable for the current problem.
+In the beginning I was training the network on the normal training dataset and later only on the balanced dataset, to achieve a less biased prediction. After realizing that the test set accuracy was slightly lower than the validation set accuracy I assumed overfitting and massivly reduced the parameter `keep_prop` in the dropout layers from `0.7` down to a value of `0.2`.
 
-In the beginning I was training the network on the normal training dataset and later only on the balanced dataset, to achieve a less biased prediction. After realizing that the test set accuracy was slightly lower than the validation set accuracy I assumed overfitting and reduced the parameter `keep_prop` in the dropout layers.
-
-My final model results were:
-* training set accuracy: 0.998
+My final model1 results were:
+* training set accuracy: 1.0
 * validation set accuracy: 0.981
-* test set accuracy: 0.972
+* test set accuracy: 0.975
 
-If an iterative approach was chosen:
-* How was the architecture adjusted and why was it adjusted? Typical adjustments could include choosing a different model architecture, adding or taking away layers (pooling, dropout, convolution, etc), using an activation function or changing the activation function. One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
-* Which parameters were tuned? How were they adjusted and why?
-* What are some of the important design choices and why were they chosen? For example, why might a convolution layer work well with this problem? How might a dropout layer help with creating a successful model?
+My model2 results were:
+* training set accuracy: 1.0
+* validation set accuracy: 0.971
+* test set accuracy: 0.973
 
+Surprisingly model1 - although having way less parameters - scored a higher overall accuracy compared to model2.
+Because validation and test accuracy are slightly different for model1 I think there is a higher degree of overfitting in model1, whereas model2 has very similar accuracy values, meaning that the model generalizes better on the presented data due to higher amount of parameters.
+
+
+One common justification for adjusting an architecture would be due to overfitting or underfitting. A high accuracy on the training set but low accuracy on the validation set indicates over fitting; a low accuracy on both sets indicates under fitting.
 
 Testing on the test dataset gives an accuracy of 97.4% accuracy, where the accuracies are distributed among the class as follows:
 
