@@ -213,18 +213,18 @@ In the beginning I was training the network on the normal training dataset and l
 
 My final model1 results were:
 * training set accuracy: 1.0
-* validation set accuracy: 0.981
-* test set accuracy: 0.975
+* validation set accuracy: 0.983
+* test set accuracy: 0.974
 
 My model2 results were:
 * training set accuracy: 1.0
-* validation set accuracy: 0.971
+* validation set accuracy: 0.973
 * test set accuracy: 0.973
 
 The deeper model1 scored a higher overall accuracy compared to model2 which is wider and has almost the same amount of parameters.
 Because validation and test accuracy are slightly different for model1 I think there is a slightly higher degree of overfitting in model1, whereas model2 has very similar accuracy values, meaning that the model generalizes better on the presented data.
 
-When testing model1 on each class in the test set the accuracy is unexpectedly inbalanced across all classes, especially class 27 and 30 show quite low accuracy.
+When testing the models on each class in the test set the accuracy is unexpectedly inbalanced across all classes, especially class 27 and 30 show quite low accuracy.
 
 ![pred_tf_test2]
 
